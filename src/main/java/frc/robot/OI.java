@@ -6,12 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  private PneumaticCharging _charging;
+  public OI(PneumaticCharging charging) {
+    charging=_charging;
+  }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.
