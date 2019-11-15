@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSystemBase;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TankDrive;
 
+import edu.wpi.first.wpilibj.Spark;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -24,6 +27,11 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static DriveSystemBase m_driveSystem = new TankDrive(
+    new Spark(RobotMap.LeftFrontMotor), 
+    new Spark(RobotMap.RightFrontMotor),
+    new Spark(RobotMap.LeftRearMotor),
+    new Spark(RobotMap.RightRearMotor));
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -35,7 +43,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    m_oi = new OI(m_driveSystem);
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
