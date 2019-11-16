@@ -7,11 +7,63 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.*;
+import frc.robot.pixy2.Pixy2;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  Pixy2 _i2cPixy2 = null;
+  Pixy2 _spiPixy2 = null;
+  Command _autonomousCommand;
+  SendableChooser<Command> _autoChooser = new SendableChooser<>();
+  SendableChooser<Command> _i2cPixyChooser = new SendableChooser<>();
+  SendableChooser<Command> _spiPixyChooser = new SendableChooser<>();
+
+
+
+  public OI(Pixy2 i2cPixy2, Pixy2 spiPixy2){
+    _i2cPixy2 = i2cPixy2;
+    _spiPixy2 = spiPixy2;
+  }
+
+  public void init() {
+    if (_i2cPixy2 != null){
+      _i2cPixyChooser.setDefaultOption("Check Version", new SendCheckVersion(_i2cPixy2));
+      _i2cPixyChooser.addOption("Get Biggest Block", new SendGetBiggestBlock(_i2cPixy2));
+      _i2cPixyChooser.addOption("Lamp Off", new SendLED(_i2cPixy2, false, 0, 0, 0));
+      _i2cPixyChooser.addOption("Lamp On (Red)", new SendLED(_i2cPixy2, true, 255, 0, 0));
+      _i2cPixyChooser.addOption("Lamp On (Green)", new SendLED(_i2cPixy2, true, 0, 255, 0));
+      _i2cPixyChooser.addOption("Lamp On (Blue)", new SendLED(_i2cPixy2, true, 0, 0, 255));
+      _i2cPixyChooser.addOption("Lamp On (Purple)", new SendLED(_i2cPixy2, true, 200, 30, 255));
+      SmartDashboard.putData("I2C Pixy Command", _i2cPixyChooser);
+      SmartDashboard.putData("Send I2C Command", new ExecuteChooser(_i2cPixyChooser));
+    }
+
+    if (_spiPixy2 != null){
+      _spiPixyChooser.setDefaultOption("Check Version", new SendCheckVersion(_spiPixy2));
+      _spiPixyChooser.addOption("Get Biggest Block", new SendGetBiggestBlock(_spiPixy2));
+      _spiPixyChooser.addOption("Lamp Off", new SendLED(_spiPixy2, false, 0, 0, 0));
+      _spiPixyChooser.addOption("Lamp On (Red)", new SendLED(_spiPixy2, true, 255, 0, 0));
+      _spiPixyChooser.addOption("Lamp On (Green)", new SendLED(_spiPixy2, true, 0, 255, 0));
+      _spiPixyChooser.addOption("Lamp On (Blue)", new SendLED(_spiPixy2, true, 0, 0, 255));
+      _spiPixyChooser.addOption("Lamp On (Purple)", new SendLED(_spiPixy2, true, 200, 30, 255));
+      SmartDashboard.putData("SPI Pixy Command", _spiPixyChooser);
+      SmartDashboard.putData("Send SPI Command", new ExecuteChooser(_spiPixyChooser));
+    }
+
+    SmartDashboard.putData("Auto mode", _autoChooser);
+  }
+
+  public Command getAutonmousCommand(){
+    return _autoChooser.getSelected();
+  }
+
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.
