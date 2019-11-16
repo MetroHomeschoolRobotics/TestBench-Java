@@ -92,7 +92,7 @@ public class I2CLink implements Link {
 			// n is the number read -- it most likely won't be equal to length
 			n = 0;
 			byte[] read = new byte[length - i];
-			i2c.transaction(new byte[0], (byte) 0, read, (length - i));
+			i2c.readOnly(read, (length - i));
 			for (int k = 0; k < read.length; k++) {
 				n++;
 				byte b = read[k];
@@ -116,7 +116,6 @@ public class I2CLink implements Link {
 	 */
 	public int receive(byte[] buffer, int length) {
 		int ret = receive(buffer, length, null);
-		System.out.println("I2C Receive:" + Arrays.toString(buffer));
 		return ret;
 	}
 
@@ -131,15 +130,13 @@ public class I2CLink implements Link {
 	public int send(byte[] buffer, int length) {
 		int i, packet;
 		
-		System.out.println("I2C Send:" + Arrays.toString(buffer));
-
 		for (i = 0; i < length; i += PIXY_I2C_MAX_SEND) {
 			if (length - i < PIXY_I2C_MAX_SEND)
 				packet = (length - i);
 			else
 				packet = PIXY_I2C_MAX_SEND;
 			byte[] send = Arrays.copyOfRange(buffer, i, packet);
-			i2c.transaction(send, packet, new byte[0], 0);
+			i2c.writeBulk(send, packet);
 		}
 		return length;
 	}

@@ -120,7 +120,6 @@ public class SPILink implements Link {
 	 */
 	public int receive(byte[] buffer, int length) {
 		int ret = receive(buffer, length, null);
-		System.out.println("SPI Receive:" + Arrays.toString(buffer));
 		return ret;
 	}
 
@@ -133,8 +132,6 @@ public class SPILink implements Link {
 	 * @return Length of value sent
 	 */
 	public int send(byte[] buffer, int length) {
-		System.out.println("SPI Send:" + Arrays.toString(buffer));
-
 		spi.write(buffer, length);
 		return length;
 	}

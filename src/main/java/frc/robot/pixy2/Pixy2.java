@@ -352,7 +352,7 @@ public class Pixy2 {
 				if (start == PIXY_CHECKSUM_SYNC) {
 					m_cs = true;
 					return PIXY_RESULT_OK;
-				}
+				} 
 				if (start == PIXY_NO_CHECKSUM_SYNC) {
 					m_cs = false;
 					return PIXY_RESULT_OK;
@@ -416,8 +416,9 @@ public class Pixy2 {
 			if (res < 0)
 				return res;
 			// Checks for accuracy with checksum
-			if (csSerial != csCalc.getChecksum())
+			if (csSerial != csCalc.getChecksum()) {
 				return PIXY_RESULT_CHECKSUM_ERROR;
+			}
 		} else {
 			// Non-checksum sync
 			res = link.receive(buffer, 2);
