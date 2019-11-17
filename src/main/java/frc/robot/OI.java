@@ -8,7 +8,8 @@
 package frc.robot;
 
 import frc.robot.subsystems.DriveSystemBase;
-
+import frc.robot.subsystems.TrackingSource;
+import frc.robot.subsystems.VisionTracking;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,8 +59,18 @@ public class OI {
       SmartDashboard.putData("SPI Pixy Command", _spiPixyChooser);
       SmartDashboard.putData("Send SPI Command", new ExecuteChooser(_spiPixyChooser));
     }
+    VisionTracking visionTracking = new VisionTracking(_spiPixy2, _i2cPixy2);
 
-    SmartDashboard.putData("Auto mode", _autoChooser);
+    SmartDashboard.putData("I2C Follow The Object", new FollowTheObject(
+      visionTracking, 
+      TrackingSource.PIXY2I2C2, 
+      _driveSystem));
+      SmartDashboard.putData("SPI Follow The Object", new FollowTheObject(
+        visionTracking, 
+        TrackingSource.Pixy2Spi, 
+        _driveSystem));
+      SmartDashboard.putData("Auto mode", _autoChooser);
+
   }
 
   public Command getAutonmousCommand(){
