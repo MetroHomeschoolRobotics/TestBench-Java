@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,18 +7,38 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Spark;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * Add your docs here.
  */
-public class ExampleSubsystem extends Subsystem {
+public class TankDrive extends DriveSystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  private Spark _frontLeft;
+  private Spark _frontRight;
+  private Spark _rearLeft;
+  private Spark _rearRight;
+
+  public TankDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
+    _frontLeft = frontLeft;
+    _frontRight = frontRight;
+    _rearLeft = rearLeft;
+    _rearRight = rearRight;
+  }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  @Override
+  public void move(double x, double y, double z){
+    _frontLeft.set((y-x));
+    _rearLeft.set((y-x));
+    _frontRight.set((-y-x));
+    _rearRight.set((-y-x));  
   }
 }

@@ -7,9 +7,6 @@
 
 package frc.robot.pixy2.links;
 
-
-import java.util.Arrays;
-
 import edu.wpi.first.wpilibj.SPI;
 
 /**

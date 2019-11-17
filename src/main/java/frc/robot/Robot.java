@@ -10,11 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.pixy2.Pixy2;
 import frc.robot.pixy2.links.*;
+import frc.robot.subsystems.*;
 
+import edu.wpi.first.wpilibj.Spark;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -33,6 +33,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    DriveSystemBase driveSystem = new TankDrive(
+      new Spark(RobotMap.LeftFrontMotor), 
+      new Spark(RobotMap.RightFrontMotor),
+      new Spark(RobotMap.LeftRearMotor),
+      new Spark(RobotMap.RightRearMotor));
+      
     Pixy2 pixy2I2C = null;
     Pixy2 pixy2SPI = null;
 
@@ -51,7 +57,7 @@ public class Robot extends TimedRobot {
       pixy2SPI = null;
     }
 
-    m_oi = new OI(pixy2I2C, pixy2SPI);
+    m_oi = new OI(driveSystem, pixy2I2C, pixy2SPI);
     m_oi.init();
   }
 

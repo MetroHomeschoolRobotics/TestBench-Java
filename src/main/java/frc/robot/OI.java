@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.DriveSystemBase;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +20,7 @@ import frc.robot.pixy2.Pixy2;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  private DriveSystemBase _driveSystem;
   Pixy2 _i2cPixy2 = null;
   Pixy2 _spiPixy2 = null;
   Command _autonomousCommand;
@@ -25,9 +28,8 @@ public class OI {
   SendableChooser<Command> _i2cPixyChooser = new SendableChooser<>();
   SendableChooser<Command> _spiPixyChooser = new SendableChooser<>();
 
-
-
-  public OI(Pixy2 i2cPixy2, Pixy2 spiPixy2){
+  public OI(DriveSystemBase driveSystem, Pixy2 i2cPixy2, Pixy2 spiPixy2){
+    _driveSystem = driveSystem;
     _i2cPixy2 = i2cPixy2;
     _spiPixy2 = spiPixy2;
   }
