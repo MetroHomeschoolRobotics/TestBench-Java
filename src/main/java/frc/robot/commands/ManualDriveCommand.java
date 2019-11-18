@@ -5,9 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package DriveCommands;
+package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.subsystems.DriveSystemBase;
 
 public class ManualDriveCommand extends Command {
   private DriveSystemBase _driveSystem;
@@ -34,38 +36,38 @@ public class ManualDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double total = abs(_driverControl.getRawAxis(0)) +
-		  abs(_driverControl.getRawAxis(1)) +
-		  abs(_driverControl.getRawAxis(2)) +
-		  abs(_driverControl.getRawAxis(3));
+    double total = Math.abs(_driverControl.getRawAxis(0)) +
+    Math.abs(_driverControl.getRawAxis(1)) +
+		  Math.abs(_driverControl.getRawAxis(2)) +
+		  Math.abs(_driverControl.getRawAxis(3));
 	if (total > _threshold*2) {
-		double x = _driverControl->GetRawAxis(0);
-		double y = _driverControl->GetRawAxis(1);
-		if (abs(x) < _threshold){
+		double x = _driverControl.getRawAxis(0);
+		double y = _driverControl.getRawAxis(1);
+		if (Math.abs(x) < _threshold){
 			x = 0;
-		} else if (abs(x) < _threshold * 7){
+		} else if (Math.abs(x) < _threshold * 7){
 			x /= 2;
 		}
-		if (abs(y) < _threshold){
+		if (Math.abs(y) < _threshold){
 			y = 0;
-		} else if (abs(y) < _threshold * 7){
+		} else if (Math.abs(y) < _threshold * 7){
 			y /= 2;
 		}
 		_driveSystem.move(
 				x/2,
 				y/2,
-				_driverControl->GetRawAxis(2) - _driverControl->GetRawAxis(3));
+				_driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
 	} else {
 		_driveSystem.move(
-				_driverControl->GetRawAxis(0)/2,
-				_driverControl->GetRawAxis(1)/2,
-				_driverControl->GetRawAxis(2) - _driverControl->GetRawAxis(3));
+				_driverControl.getRawAxis(0)/2,
+				_driverControl.getRawAxis(1)/2,
+				_driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
 	}
-	if (_driverControl->GetRawButton(6)) {
+	if (_driverControl.getRawButton(6)) {
 		_driveSystem.move(
-				_driverControl->GetRawAxis(0),
-				_driverControl->GetRawAxis(1),
-				_driverControl->GetRawAxis(2) - _driverControl->GetRawAxis(3));
+				_driverControl.getRawAxis(0),
+				_driverControl.getRawAxis(1),
+				_driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
 	}
 
   }

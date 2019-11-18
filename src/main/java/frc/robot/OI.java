@@ -10,6 +10,9 @@ package frc.robot;
 import frc.robot.subsystems.DriveSystemBase;
 import frc.robot.subsystems.TrackingSource;
 import frc.robot.subsystems.VisionTracking;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +28,7 @@ public class OI {
   Pixy2 _i2cPixy2 = null;
   Pixy2 _spiPixy2 = null;
   Command _autonomousCommand;
+  Command _driveCommand;
   SendableChooser<Command> _autoChooser = new SendableChooser<>();
   SendableChooser<Command> _i2cPixyChooser = new SendableChooser<>();
   SendableChooser<Command> _spiPixyChooser = new SendableChooser<>();
@@ -36,6 +40,11 @@ public class OI {
   }
 
   public void init() {
+    Joystick driverControl = new Joystick(0);
+    Joystick manipulatorControl = new Joystick(1);
+
+    _driveCommand = new ManualDriveCommand(_driveSystem, driverControl, manipulatorControl);
+
     if (_i2cPixy2 != null){
       _i2cPixyChooser.setDefaultOption("Check Version", new SendCheckVersion(_i2cPixy2));
       _i2cPixyChooser.addOption("Get Biggest Block", new SendGetBiggestBlock(_i2cPixy2));
@@ -61,20 +70,32 @@ public class OI {
     }
     VisionTracking visionTracking = new VisionTracking(_spiPixy2, _i2cPixy2);
 
-    SmartDashboard.putData("I2C Follow The Object", new FollowTheObject(
+    Command followTheObjectI2C = new FollowTheObject(
       visionTracking, 
       TrackingSource.PIXY2I2C2, 
-      _driveSystem));
-      SmartDashboard.putData("SPI Follow The Object", new FollowTheObject(
+      _driveSystem);
+      SmartDashboard.putData("I2C Follow The Object",followTheObjectI2C);
+      Command followTheObjectSpi = new FollowTheObject(
         visionTracking, 
         TrackingSource.Pixy2Spi, 
-        _driveSystem));
+        _driveSystem);
+        SmartDashboard.putData("SPI Follow The Object",followTheObjectSpi);
+      
+      Button btn6 = new JoystickButton(driverControl, 6);
+      btn6.whenPressed(followTheObjectI2C);
+      Button btn8 = new JoystickButton(driverControl, 8);
+      btn8.whenPressed(followTheObjectSpi);
+
       SmartDashboard.putData("Auto mode", _autoChooser);
 
   }
 
   public Command getAutonmousCommand(){
     return _autoChooser.getSelected();
+  }
+
+  public Command getDriveCommand() {
+    return _driveCommand;
   }
 
   //// CREATING BUTTONS
