@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    m_oi._driveCommand.cancel();
   }
 
   /**
@@ -101,6 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_oi.getAutonmousCommand();
+    m_oi._driveCommand.cancel();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -132,6 +134,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_oi._driveCommand.start();
   }
 
   /**
