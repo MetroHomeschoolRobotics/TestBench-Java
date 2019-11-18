@@ -81,8 +81,8 @@ public class OI {
         _driveSystem);
         SmartDashboard.putData("SPI Follow The Object",followTheObjectSpi);
       
-      Button btn6 = new JoystickButton(driverControl, 6);
-      btn6.whenPressed(followTheObjectI2C);
+      Button btn7 = new JoystickButton(driverControl, 7);
+      btn7.whenPressed(followTheObjectI2C);
       Button btn8 = new JoystickButton(driverControl, 8);
       btn8.whenPressed(followTheObjectSpi);
 
