@@ -43,29 +43,22 @@ public class FollowTheObject extends Command {
     if (_foundBlock != null) {
       System.out.println("Follow Found Block: " + _foundBlock.toString());
       double x = 0,y = 0;
-      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 80){
-        y = 0.2;
-      } else if (_foundBlock.getWidth() > 85) {
-        y = -0.2;
+      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 50){
+        x = 0.12;
+      } else if (_foundBlock.getWidth() > 55) {
+        x = -0.12;
       }
-      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 180){
-        x = 0.2;
-      } else if (_foundBlock.getX() > 190){
-        x = -0.2;
+      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 230){
+        y = 0.12;
+      } else if (_foundBlock.getX() > 235){
+        y = -0.12;
       }
       System.out.println("Follow age: " + _foundBlock.getAge() + ", x:" + x + ", y:" + y); 
       SmartDashboard.putNumber("Follow Age", _foundBlock.getAge());
       SmartDashboard.putNumber("Follow X", x);
       SmartDashboard.putNumber("Follow Y", y);
 
-      if (_foundBlock.getAge() == 255){
-        // stop spinning
-        x = 0;
-        y = 0;
-        //_foundBlock = null;
-      }
-
-      _driveSystem.move(x, y, 0);
+      _driveSystem.move(-x, y, 0);
     } else {
       System.out.println("Follow no block found");
     }
@@ -87,5 +80,6 @@ public class FollowTheObject extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

@@ -36,7 +36,6 @@ public class SendLED extends Command {
   @Override
   protected void execute() {
     if (_on){
-      _pixy2.setLamp((byte)1, (byte)1);
       _pixy2.setLED(_r, _g, _b);
     } else {
       _pixy2.setLamp((byte)0, (byte)0);

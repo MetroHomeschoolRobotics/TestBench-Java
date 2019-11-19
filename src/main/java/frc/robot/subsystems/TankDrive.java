@@ -9,8 +9,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj.Spark;
-
 /**
  * Add your docs here.
  */
