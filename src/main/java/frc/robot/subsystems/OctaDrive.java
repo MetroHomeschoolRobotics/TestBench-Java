@@ -7,18 +7,21 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.subsystems.*;
 
 public class OctaDrive extends DriveSystemBase {
   private DriveSystemBase _tankDrive;
   private DriveSystemBase _mechDrive;
-  private boolean isTank = true;
+  private boolean _isTank = true;
+  private DoubleSolenoid _driveSwitch;
   
   //public OctaDrive (Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight, TankDrive tankDrive, MechDrive mechDrive){
-    public OctaDrive (DriveSystemBase tankDrive, DriveSystemBase mechDrive){
+    public OctaDrive (DriveSystemBase tankDrive, DriveSystemBase mechDrive, DoubleSolenoid driveSwitch){
     _tankDrive = tankDrive;
     _mechDrive = mechDrive;
+    _driveSwitch = driveSwitch;
   }
 
   @Override
@@ -29,7 +32,7 @@ public class OctaDrive extends DriveSystemBase {
 
   @Override
   public void move(double x, double y, double z){
-    if (isTank){
+    if (_isTank){
        _tankDrive.move(x,y,0);
     } else {
         _mechDrive.move(x,y,z);
@@ -38,18 +41,17 @@ public class OctaDrive extends DriveSystemBase {
 
   public void switchMode(){
 
-    isTank = !isTank;
+    _isTank = !_isTank;
   
-     if (isTank){
-    //   RobotMap.octoDriveSwitchSol1.get().set(frc::DoubleSolenoid::Value::kReverse);
+     if (_isTank){
+       _driveSwitch.set(DoubleSolenoid.Value.kReverse);
      } else {
-    //   RobotMap.octoDriveSwitchSol1.get().set(frc::DoubleSolenoid::Value::kForward);
+      _driveSwitch.set(DoubleSolenoid.Value.kForward);
      }
   
   }
 
   public boolean isTankDrive() {
-    return isTank;
+    return _isTank;
   }
-
  }

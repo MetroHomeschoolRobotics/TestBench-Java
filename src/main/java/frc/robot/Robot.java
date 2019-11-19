@@ -17,7 +17,7 @@ import frc.robot.commands.*;
 // import frc.robot.subsystems.OctaDrive;
 // import frc.robot.subsystems.MechDrive;
 import frc.robot.subsystems.*;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,7 +52,8 @@ public class Robot extends TimedRobot {
 
     m_octaDrive = new OctaDrive(
       tankDrive, 
-      mechDrive);
+      mechDrive,
+      new DoubleSolenoid(RobotMap.TankSwitchForward, RobotMap.TankSwitchReverse));
   }
 
   /**
