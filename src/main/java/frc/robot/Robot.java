@@ -134,7 +134,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_oi._driveCommand.start();
+    //m_oi._driveCommand.start();
   }
 
   /**

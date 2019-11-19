@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.pixy2.Pixy2;
 import frc.robot.pixy2.Pixy2CCC;
+import frc.robot.pixy2.Pixy2.LinkType;
 import frc.robot.pixy2.Pixy2CCC.Block;
 
 /**
@@ -20,12 +21,8 @@ import frc.robot.pixy2.Pixy2CCC.Block;
 public class VisionTracking extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Pixy2 _spiPixy;
-  private Pixy2 _i2cPixy;
 
-  public VisionTracking(Pixy2 spiPixy, Pixy2 i2cPixy){
-    _spiPixy = spiPixy;
-    _i2cPixy = i2cPixy;
+  public VisionTracking(){
   }
 
   @Override
@@ -35,12 +32,30 @@ public class VisionTracking extends Subsystem {
   }
 
   public Block FindBiggestBlock(TrackingSource source){
-    if (source == TrackingSource.PIXY2I2C2 && _i2cPixy != null){
-      return  getBiggestBlock(_i2cPixy);
-    } else if (source == TrackingSource.Pixy2Spi && _spiPixy != null){
-      return getBiggestBlock(_spiPixy);
+    var pixy = buildPixy(source);
+    if (pixy != null){
+      return getBiggestBlock(pixy);
     }
     return null;
+  }
+
+  private Pixy2 buildPixy(TrackingSource source){
+    try {
+      Pixy2 pixy = null;
+      if (source == TrackingSource.PIXY2I2C2){
+        pixy = Pixy2.createInstance(LinkType.I2C);
+      } else if (source == TrackingSource.Pixy2Spi){
+        pixy = Pixy2.createInstance(LinkType.SPI);
+      }
+      if (pixy != null){
+        pixy.init();
+      }
+      return pixy;
+    } catch(Exception e){
+      System.out.println("Unable to build pixy: " + e.getMessage());
+      return null;
+    }
+
   }
 
   
@@ -67,7 +82,12 @@ public class VisionTracking extends Subsystem {
 			} else if (block.getWidth() > largestBlock.getWidth()) {
 				largestBlock = block;
 			}
-		}
+    }
+    if (largestBlock == null){
+      System.out.println("No largest block");
+    } else {
+      System.out.println("Largest block: " + largestBlock.toString());
+    }
 		return largestBlock;
 	}
 }

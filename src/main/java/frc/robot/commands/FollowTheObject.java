@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.pixy2.Pixy2;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.pixy2.Pixy2CCC.Block;
 import frc.robot.subsystems.DriveSystemBase;
 import frc.robot.subsystems.TrackingSource;
@@ -38,24 +38,33 @@ public class FollowTheObject extends Command {
   protected void execute() {
     _foundBlock = _visionTracking.FindBiggestBlock(_trackingSource);
     if (_foundBlock != null) {
+      System.out.println("Follow Found Block: " + _foundBlock.toString());
       double x = 0,y = 0;
-      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 80){
+      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 60){
         y = 0.2;
-      } else if (_foundBlock.getWidth() > 90) {
+      } else if (_foundBlock.getWidth() > 80) {
         y = -0.2;
       }
-      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 40){
+      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 160){
         x = 0.2;
-      } else if (_foundBlock.getX() > 50){
+      } else if (_foundBlock.getX() > 170){
         x = -0.2;
       }
-      if (_foundBlock.getAge() > 500){
+      System.out.println("Follow age: " + _foundBlock.getAge() + ", x:" + x + ", y:" + y); 
+      SmartDashboard.putNumber("Follow Age", _foundBlock.getAge());
+      SmartDashboard.putNumber("Follow X", x);
+      SmartDashboard.putNumber("Follow Y", y);
+
+      if (_foundBlock.getAge() == 255){
         // stop spinning
         x = 0;
         y = 0;
+        //_foundBlock = null;
       }
 
       _driveSystem.move(x, y, 0);
+    } else {
+      System.out.println("Follow no block found");
     }
   }
 
