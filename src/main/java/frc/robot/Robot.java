@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.DriveSystemBase;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.TankDrive;
-import frc.robot.subsystems.OctaDrive;
+import frc.robot.commands.*;
+// import frc.robot.subsystems.TankDrive;
+// import frc.robot.subsystems.OctaDrive;
+// import frc.robot.subsystems.MechDrive;
+import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.Spark;
 /**
@@ -27,13 +27,8 @@ import edu.wpi.first.wpilibj.Spark;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-  public static DriveSystemBase m_driveSystem = new TankDrive(
-    new Spark(RobotMap.LeftFrontMotor), 
-    new Spark(RobotMap.RightFrontMotor),
-    new Spark(RobotMap.LeftRearMotor),
-    new Spark(RobotMap.RightRearMotor));
   public static OI m_oi;
+  public static OctaDrive m_octaDrive;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -44,10 +39,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI(m_driveSystem);
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    DriveSystemBase tankDrive = new TankDrive(
+      new Spark(RobotMap.LeftFrontMotor), 
+      new Spark(RobotMap.RightFrontMotor),
+      new Spark(RobotMap.LeftRearMotor),
+      new Spark(RobotMap.RightRearMotor));
+    DriveSystemBase mechDrive = new MechDrive(
+        new Spark(RobotMap.LeftFrontMotor), 
+        new Spark(RobotMap.RightFrontMotor),
+        new Spark(RobotMap.LeftRearMotor),
+        new Spark(RobotMap.RightRearMotor));
+
+    m_octaDrive = new OctaDrive(
+      tankDrive, 
+      mechDrive);
   }
 
   /**

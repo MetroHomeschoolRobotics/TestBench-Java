@@ -7,25 +7,20 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.Spark;
 
-/**
- * Add your docs here.
- */
 public class TankDrive extends DriveSystemBase {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  private Spark _frontLeft;
-  private Spark _frontRight;
-  private Spark _rearLeft;
-  private Spark _rearRight;
+  private Spark frontLeft;
+  private Spark frontRight;
+  private Spark rearLeft;
+  private Spark rearRight;
 
   public TankDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
-    _frontLeft = frontLeft;
-    _frontRight = frontRight;
-    _rearLeft = rearLeft;
-    _rearRight = rearRight;
+    this.frontLeft = frontLeft;
+    this.frontRight = frontRight;
+    this.rearLeft = rearLeft;
+    this.rearRight = rearRight;
   }
 
   @Override
@@ -36,9 +31,9 @@ public class TankDrive extends DriveSystemBase {
 
   @Override
   public void move(double x, double y, double z){
-    _frontLeft.set((y-x));
-    _rearLeft.set((y-x));
-    _frontRight.set((-y-x));
-    _rearRight.set((-y-x));  
+    frontLeft.set((y-x));
+    rearLeft.set((y-x));
+    frontRight.set((-y-x));
+    rearRight.set((-y-x));  
   }
 }

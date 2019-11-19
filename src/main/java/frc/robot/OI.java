@@ -17,6 +17,12 @@ public class OI {
   private DriveSystemBase _driveSystem;
   public OI(DriveSystemBase driveSystem){
     _driveSystem = driveSystem;
+
+    //private Joystick driveJoystick;
+    // std::shared_ptr<frc::Joystick> driveJoystick;
+    // std::shared_ptr<frc::Joystick> manipulatorJoystick;
+    // driveJoystick.reset(new Joystick(0));
+    // manipulatorJoystick.reset(new Joystick(1));
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

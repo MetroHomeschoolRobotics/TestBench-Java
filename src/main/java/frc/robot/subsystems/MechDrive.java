@@ -9,19 +9,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 
-/**
- * Add your docs here.
- */
 public class MechDrive extends DriveSystemBase {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
   private Spark frontLeft;
   private Spark frontRight;
   private Spark rearLeft;
   private Spark rearRight;
   private double threshold = 0.1;
-
 
   public MechDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
     this.frontLeft = frontLeft;
@@ -43,17 +36,17 @@ public class MechDrive extends DriveSystemBase {
     //std::printf("Lidar Distance %4.2f \n", distance);
     //std::printf("Gyro Angle %4.2f \n", positioning.get()->GetAngle());
   
-    // if(fabs(x) < this.threshold) {
-    //   x = 0;
-    // }
+     if(Math.abs(x) < this.threshold) {
+       x = 0;
+     }
   
-    // if(fabs(y) < threshold) {
-    //   y = 0;
-    // }
+     if(Math.abs(y) < threshold) {
+       y = 0;
+     }
   
-    // if(fabs(z) < threshold) {
-    //   z = 0;
-    // }
+     if(Math.abs(z) < threshold) {
+       z = 0;
+     }
   
     //driveTrain.get()->DriveCartesian(x, y, z, positioning.get()->GetAngle());
     frontLeft.set(y-x+z);

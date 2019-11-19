@@ -8,19 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
-//import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.subsystems.*;
 
 public class OctaDrive extends DriveSystemBase {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  private Spark _frontLeft;
-  private Spark _frontRight;
-  private Spark _rearLeft;
-  private Spark _rearRight;
+  private DriveSystemBase _tankDrive;
+  private DriveSystemBase _mechDrive;
   private boolean isTank = true;
-  public OctaDrive (){
-    //tankDrive
+  
+  //public OctaDrive (Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight, TankDrive tankDrive, MechDrive mechDrive){
+    public OctaDrive (DriveSystemBase tankDrive, DriveSystemBase mechDrive){
+    _tankDrive = tankDrive;
+    _mechDrive = mechDrive;
   }
 
   @Override
@@ -31,26 +29,22 @@ public class OctaDrive extends DriveSystemBase {
 
   @Override
   public void move(double x, double y, double z){
-    // _frontLeft.set((y-x));//may be modified later
-    // _rearLeft.set((y-x));
-    // _frontRight.set((-y-x));
-    // _rearRight.set((-y-x));  
-    // if (isTank){
-    //   tankDrive.get().move(x,y);
-    // } else {
-    //   mechDrive.get().move(x,y,z);
-    // }
+    if (isTank){
+       _tankDrive.move(x,y,0);
+    } else {
+        _mechDrive.move(x,y,z);
+    }
   }
 
   public void switchMode(){
 
     isTank = !isTank;
   
-    // if (isTank){
-    //   RobotMap::octoDriveSwitchSol1.get().Set(frc::DoubleSolenoid::Value::kReverse);
-    // } else {
-    //   RobotMap::octoDriveSwitchSol1.get().Set(frc::DoubleSolenoid::Value::kForward);
-    // }
+     if (isTank){
+    //   RobotMap.octoDriveSwitchSol1.get().set(frc::DoubleSolenoid::Value::kReverse);
+     } else {
+    //   RobotMap.octoDriveSwitchSol1.get().set(frc::DoubleSolenoid::Value::kForward);
+     }
   
   }
 
