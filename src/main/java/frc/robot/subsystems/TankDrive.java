@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.Spark;
 
 /**
@@ -16,12 +18,12 @@ public class TankDrive extends DriveSystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private Spark _frontLeft;
-  private Spark _frontRight;
-  private Spark _rearLeft;
-  private Spark _rearRight;
+  private CANSparkMax _frontLeft;
+  private CANSparkMax _frontRight;
+  private CANSparkMax _rearLeft;
+  private CANSparkMax _rearRight;
 
-  public TankDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
+  public TankDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
     _frontLeft = frontLeft;
     _frontRight = frontRight;
     _rearLeft = rearLeft;

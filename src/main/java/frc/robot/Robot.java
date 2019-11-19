@@ -14,6 +14,9 @@ import frc.robot.pixy2.Pixy2;
 import frc.robot.pixy2.links.*;
 import frc.robot.subsystems.*;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.Spark;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,10 +37,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     DriveSystemBase driveSystem = new TankDrive(
-      new Spark(RobotMap.LeftFrontMotor), 
-      new Spark(RobotMap.RightFrontMotor),
-      new Spark(RobotMap.LeftRearMotor),
-      new Spark(RobotMap.RightRearMotor));
+      new CANSparkMax(RobotMap.LeftFrontMotor, MotorType.kBrushless), 
+      new CANSparkMax(RobotMap.RightFrontMotor, MotorType.kBrushless),
+      new CANSparkMax(RobotMap.LeftRearMotor, MotorType.kBrushless),
+      new CANSparkMax(RobotMap.RightRearMotor, MotorType.kBrushless));
       
     Pixy2 pixy2I2C = null;
     Pixy2 pixy2SPI = null;
@@ -134,7 +137,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //m_oi._driveCommand.start();
+    m_oi._driveCommand.start();
   }
 
   /**

@@ -71,20 +71,22 @@ public class OI {
     VisionTracking visionTracking = new VisionTracking();
 
     Command followTheObjectI2C = new FollowTheObject(
+      _driveCommand,
       visionTracking, 
       TrackingSource.PIXY2I2C2, 
       _driveSystem);
       SmartDashboard.putData("I2C Follow The Object",followTheObjectI2C);
       Command followTheObjectSpi = new FollowTheObject(
+        _driveCommand,
         visionTracking, 
         TrackingSource.Pixy2Spi, 
         _driveSystem);
         SmartDashboard.putData("SPI Follow The Object",followTheObjectSpi);
       
-      //Button btn7 = new JoystickButton(driverControl, 7);
-      //btn7.whenPressed(followTheObjectI2C);
-      //Button btn8 = new JoystickButton(driverControl, 8);
-      //btn8.whenPressed(followTheObjectSpi);
+      Button btn7 = new JoystickButton(driverControl, 7);
+      btn7.whenPressed(followTheObjectI2C);
+      Button btn8 = new JoystickButton(driverControl, 8);
+      btn8.whenPressed(followTheObjectSpi);
 
       SmartDashboard.putData("Auto mode", _autoChooser);
 

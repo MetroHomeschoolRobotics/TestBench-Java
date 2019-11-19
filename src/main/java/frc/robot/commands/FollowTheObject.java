@@ -19,13 +19,15 @@ public class FollowTheObject extends Command {
   private TrackingSource _trackingSource;
   private DriveSystemBase _driveSystem;
   private Block _foundBlock;
+  private Command _driveCommand;
 
-  public FollowTheObject(VisionTracking visionTracking, TrackingSource trackingSource, DriveSystemBase driveSystem) {
+  public FollowTheObject(Command driveCommand, VisionTracking visionTracking, TrackingSource trackingSource, DriveSystemBase driveSystem) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     _visionTracking = visionTracking;
     _trackingSource = trackingSource;
     _driveSystem = driveSystem;
+    _driveCommand = driveCommand;
   }
 
   // Called just before this Command runs the first time
@@ -36,18 +38,19 @@ public class FollowTheObject extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    _driveCommand.cancel();
     _foundBlock = _visionTracking.FindBiggestBlock(_trackingSource);
     if (_foundBlock != null) {
       System.out.println("Follow Found Block: " + _foundBlock.toString());
       double x = 0,y = 0;
-      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 60){
+      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 80){
         y = 0.2;
-      } else if (_foundBlock.getWidth() > 80) {
+      } else if (_foundBlock.getWidth() > 85) {
         y = -0.2;
       }
-      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 160){
+      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 180){
         x = 0.2;
-      } else if (_foundBlock.getX() > 170){
+      } else if (_foundBlock.getX() > 190){
         x = -0.2;
       }
       System.out.println("Follow age: " + _foundBlock.getAge() + ", x:" + x + ", y:" + y); 
@@ -77,6 +80,7 @@ public class FollowTheObject extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    _driveCommand.start();
   }
 
   // Called when another command which requires one or more of the same
