@@ -36,7 +36,7 @@ public class OI {
 
   public void init() {
     Joystick driverControl = new Joystick(0);
-    Joystick manipulatorControl = new Joystick (1);
+    Joystick manipulatorControl = new Joystick(1);
     _driveTank = new DriveTank(_tankDrive, driverControl, manipulatorControl);
     _driveOcta = new DriveOcta(_octaDrive, driverControl, manipulatorControl);
 
