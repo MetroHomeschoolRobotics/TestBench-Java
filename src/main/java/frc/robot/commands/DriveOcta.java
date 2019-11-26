@@ -7,17 +7,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.DriveSystemBase;
 //import frc.robot.subsystems.OctaDrive;
-import edu.wpi.first.wpilibj.Joystick;
+
 
 public class DriveOcta extends Command {
   private DriveSystemBase _octaDrive;
   private Joystick _driverControl;
   private Joystick _manipulatorControl;  
-  private double threshold = 0.1;
-  public DriveOcta(DriveSystemBase octaDrive, Joystick driverControl, Joystick manipulatorControl) {
+  
+  double threshold = 0.1;
+  public DriveOcta(DriveSystemBase octaDrive, 
+  Joystick driverControl, 
+  Joystick manipulatorControl) {
       //requires(octaDrive);
       _octaDrive = octaDrive;
       _driverControl = driverControl;

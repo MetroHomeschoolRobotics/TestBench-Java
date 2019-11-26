@@ -7,20 +7,26 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
+//import edu.wpi.first.wpilibj.Spark;
+import com.revrobotics.CANSparkMax;
 
 public class MechDrive extends DriveSystemBase {
-  private Spark frontLeft;
+  /*private Spark frontLeft;
   private Spark frontRight;
   private Spark rearLeft;
-  private Spark rearRight;
+  private Spark rearRight;*/
+  private CANSparkMax _frontLeft;
+  private CANSparkMax _frontRight;
+  private CANSparkMax _rearLeft;
+  private CANSparkMax _rearRight;
   private double threshold = 0.1;
 
-  public MechDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
-    this.frontLeft = frontLeft;
-    this.frontRight = frontRight;
-    this.rearLeft = rearLeft;
-    this.rearRight = rearRight;  
+  //public MechDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
+    public MechDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
+    _frontLeft = frontLeft;
+    _frontRight = frontRight;
+    _rearLeft = rearLeft;
+    _rearRight = rearRight;  
   }
 
   @Override
@@ -49,10 +55,10 @@ public class MechDrive extends DriveSystemBase {
      }
   
     //driveTrain.get()->DriveCartesian(x, y, z, positioning.get()->GetAngle());
-    frontLeft.set(y-x+z);
-    rearLeft.set(y+x+z);
-    frontRight.set(-y-x+z);
-    rearRight.set(-y+x+z);
+    _frontLeft.set(y-x+z);
+    _rearLeft.set(y+x+z);
+    _frontRight.set(-y-x+z);
+    _rearRight.set(-y+x+z);
   
   }
 }

@@ -10,15 +10,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.*;
-// import frc.robot.subsystems.TankDrive;
-// import frc.robot.subsystems.OctaDrive;
-// import frc.robot.subsystems.MechDrive;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Spark;
+//import edu.wpi.first.wpilibj.Spark;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
   public static OctaDrive m_octaDrive;
 
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  //SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -40,20 +41,31 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     DriveSystemBase tankDrive = new TankDrive(
-      new Spark(RobotMap.LeftFrontMotor), 
+      /*new Spark(RobotMap.LeftFrontMotor), 
       new Spark(RobotMap.RightFrontMotor),
       new Spark(RobotMap.LeftRearMotor),
-      new Spark(RobotMap.RightRearMotor));
+      new Spark(RobotMap.RightRearMotor));*/
+      new CANSparkMax(RobotMap.LeftFrontMotor, MotorType.kBrushless),
+      new CANSparkMax(RobotMap.RightFrontMotor, MotorType.kBrushless),
+      new CANSparkMax(RobotMap.LeftRearMotor, MotorType.kBrushless),
+      new CANSparkMax(RobotMap.RightRearMotor, MotorType.kBrushless));
     DriveSystemBase mechDrive = new MechDrive(
-        new Spark(RobotMap.LeftFrontMotor), 
+        /*new Spark(RobotMap.LeftFrontMotor), 
         new Spark(RobotMap.RightFrontMotor),
         new Spark(RobotMap.LeftRearMotor),
-        new Spark(RobotMap.RightRearMotor));
+        new Spark(RobotMap.RightRearMotor));*/
+        new CANSparkMax(RobotMap.LeftFrontMotor, MotorType.kBrushless),
+        new CANSparkMax(RobotMap.RightFrontMotor, MotorType.kBrushless),
+        new CANSparkMax(RobotMap.LeftRearMotor, MotorType.kBrushless),
+        new CANSparkMax(RobotMap.RightRearMotor, MotorType.kBrushless));
 
     m_octaDrive = new OctaDrive(
       tankDrive, 
       mechDrive,
       new DoubleSolenoid(RobotMap.TankSwitchForward, RobotMap.TankSwitchReverse));
+
+    m_oi = new OI(tankDrive, m_octaDrive, mechDrive);
+    m_oi.init();
   }
 
   /**
@@ -80,6 +92,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    m_oi._driveTank.cancel();
+    //m_oi._driveOcta.cancel();
   }
 
   /**
@@ -95,8 +109,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
+    //m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = m_oi.getAutonomousCommand();
+    m_oi._driveTank.cancel();
+    //m_oi._driveOcta.cancel();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -127,6 +143,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_oi._driveTank.start();
+    //m_oi._driveOcta.start();
   }
 
   /**
