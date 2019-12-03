@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.CargoSystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ReleaseCargo extends Command {
   private CargoSystem _cargoSystem;
@@ -27,6 +28,7 @@ public class ReleaseCargo extends Command {
   @Override
   protected void execute() {
     _cargoSystem.setCargoMotor(1);
+    SmartDashboard.putString("Cargo Command", "Releasing");
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +41,7 @@ public class ReleaseCargo extends Command {
   @Override
   protected void end() {
     _cargoSystem.setCargoMotor(0);
+    SmartDashboard.putString("Cargo Command", "Ended");
   }
 
   // Called when another command which requires one or more of the same

@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SetArmWithJoystick extends Command {
   private Arm _arm;
@@ -35,6 +36,7 @@ public class SetArmWithJoystick extends Command {
       rate = 0;
     }
     _arm.setArmMotor(rate);
+    SmartDashboard.putNumber("Arm command rate", rate);
   }
 
   // Make this return true when this Command no longer needs to run execute()

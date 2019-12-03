@@ -46,6 +46,12 @@ public class OI {
     _liftEncoderOverride = new LiftEncoderOverride(_lift);
     _collectCargo = new CollectCargo(_cargoSystem);
     _releaseCargo = new ReleaseCargo(_cargoSystem);
+    
+    Button collectButton = new JoystickButton(manipulatorControl, 5);
+    collectButton.whileHeld(_collectCargo);
+
+    Button releaseButton = new JoystickButton(manipulatorControl, 6);
+    releaseButton.whileHeld(_releaseCargo);
 
     SmartDashboard.putData("AutoMode", _autoChooser);
   }

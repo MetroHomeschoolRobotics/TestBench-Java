@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Spark;
 
@@ -30,5 +31,6 @@ public class CargoSystem extends Subsystem {
 
   public void setCargoMotor(double speed){
     _cargoMotor.set(speed);
+    SmartDashboard.putNumber("cargo subsystem speed", speed);
   }
 }

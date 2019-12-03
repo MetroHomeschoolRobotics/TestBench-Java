@@ -66,7 +66,7 @@ public Arm(Spark armMotor){
         val = -0.4;
     }
     _armMotor.set(val);
-    SmartDashboard.putNumber("arm val", val);
+    SmartDashboard.putNumber("arm subsystem val", val);
   }
   public double getArmAngle() { 
   //arm encoder information at:

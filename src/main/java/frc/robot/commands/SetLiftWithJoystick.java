@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SetLiftWithJoystick extends Command {
   private Lift _lift;
@@ -35,6 +36,7 @@ public class SetLiftWithJoystick extends Command {
       rate = 0;
     }
     _lift.setLiftMotor(rate);
+    SmartDashboard.putNumber("Lift Command Rate", rate);
   }
 
   // Make this return true when this Command no longer needs to run execute()
