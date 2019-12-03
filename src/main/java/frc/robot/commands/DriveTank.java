@@ -7,19 +7,25 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.DriveSystemBase;
 //import frc.robot.subsystems.TankDrive;
-import edu.wpi.first.wpilibj.Joystick;
+
 
 public class DriveTank extends Command {
-  private DriveSystemBase _driveSystem;
+  private DriveSystemBase _tankDrive;
   private Joystick _driverControl;
-  private double threshold = 0.025;
-  public DriveTank(DriveSystemBase driveSystem, Joystick driverControl) {
+  private Joystick _manipulatorControl;
+
+  double _threshold = 0.01;
+  public DriveTank(DriveSystemBase tankDrive, 
+  Joystick driverControl, 
+  Joystick manipulatorControl) {
     //requires(tankDrive);
-    _driveSystem = driveSystem;
+    _tankDrive = tankDrive;
     _driverControl = driverControl;
+    _manipulatorControl = manipulatorControl;
   }
 
   // Called just before this Command runs the first time
@@ -30,11 +36,11 @@ public class DriveTank extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (/*_driverControl->GetRawButton(2)*/true) {
+    if (/*_driverControl->GetRawButton(2)*//*true*/false) {
       //mainDrive().move(
       //mainDrive().driveVisionX(),
       //mainDrive().driveVisionY(),
-        _driveSystem.move(
+        _tankDrive.move(
         0,//_driveSystem().driveVisionX(),
         0,//driveSystem().driveVisionY(),
         0
@@ -44,41 +50,41 @@ public class DriveTank extends Command {
       Math.abs(_driverControl.getRawAxis(1)) +
       Math.abs(_driverControl.getRawAxis(2)) +
       Math.abs(_driverControl.getRawAxis(3));
-    if (total > threshold*2) {
+    if (total > _threshold*2) {
       double x = _driverControl.getRawAxis(0);
       double y = _driverControl.getRawAxis(1);
-      if (Math.abs(x) < threshold){
+      if (Math.abs(x) < _threshold){
         x = 0;
-      } else if (Math.abs(x) < threshold * 7){
+      } else if (Math.abs(x) < _threshold * 7){
         x /= 2;
       }
-      if (Math.abs(y) < threshold){
+      if (Math.abs(y) < _threshold){
         y = 0;
-      } else if (Math.abs(y) < threshold * 7){
+      } else if (Math.abs(y) < _threshold * 7){
         y /= 2;
       }
-      _driveSystem.move(
+      _tankDrive.move(
           x/2,
           y/2,
           _driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
     } else {
-      _driveSystem.move(
+      _tankDrive.move(
           _driverControl.getRawAxis(0)/2,
           _driverControl.getRawAxis(1)/2,
           _driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
     }
     if (_driverControl.getRawButton(6)) {
-      _driveSystem.move(
+      _tankDrive.move(
           _driverControl.getRawAxis(0),
           _driverControl.getRawAxis(1),
           _driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
     }
-    else if (_driverControl.getRawButton(5)) {
+    /*else if (_driverControl.getRawButton(5)) {
       _driveSystem.move(
           _driverControl.getRawAxis(0)/4,
           _driverControl.getRawAxis(1)/4,
           _driverControl.getRawAxis(2) - _driverControl.getRawAxis(3));
-    }  }
+    }*/  }
   }
 
   // Make this return true when this Command no longer needs to run execute()

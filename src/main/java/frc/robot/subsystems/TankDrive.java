@@ -8,19 +8,25 @@
 package frc.robot.subsystems;
 
 
-import edu.wpi.first.wpilibj.Spark;
+//import edu.wpi.first.wpilibj.Spark;
+import com.revrobotics.CANSparkMax;
 
 public class TankDrive extends DriveSystemBase {
-  private Spark frontLeft;
+/*  private Spark frontLeft;
   private Spark frontRight;
   private Spark rearLeft;
-  private Spark rearRight;
+  private Spark rearRight;*/
+  private CANSparkMax _frontLeft;
+  private CANSparkMax _frontRight;
+  private CANSparkMax _rearLeft;
+  private CANSparkMax _rearRight;
 
-  public TankDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
-    this.frontLeft = frontLeft;
-    this.frontRight = frontRight;
-    this.rearLeft = rearLeft;
-    this.rearRight = rearRight;
+//  public TankDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
+  public TankDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
+    _frontLeft = frontLeft;
+    _frontRight = frontRight;
+    _rearLeft = rearLeft;
+    _rearRight = rearRight;
   }
 
   @Override
@@ -31,9 +37,9 @@ public class TankDrive extends DriveSystemBase {
 
   @Override
   public void move(double x, double y, double z){
-    frontLeft.set((y-x));
-    rearLeft.set((y-x));
-    frontRight.set((-y-x));
-    rearRight.set((-y-x));  
+    _frontLeft.set((y-x));
+    _rearLeft.set((y-x));
+    _frontRight.set((-y-x));
+    _rearRight.set((-y-x));  
   }
 }
