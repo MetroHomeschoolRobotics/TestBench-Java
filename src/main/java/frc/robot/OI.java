@@ -7,11 +7,52 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.*;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  private Arm _arm;
+  private Lift _lift;
+  private CargoSystem _cargoSystem;
+  Command _autonomousCommand;
+  Command _setArmWithJoystick;
+  Command _setLiftWithJoystick;
+  Command _armEncoderOverride;
+  Command _liftEncoderOverride;
+  Command _collectCargo;
+  Command _releaseCargo;
+  SendableChooser<Command> _autoChooser = new SendableChooser<>();
+  public OI(Arm arm, CargoSystem cargoSystem, Lift lift){
+    _arm = arm;
+    _cargoSystem = cargoSystem;
+    _lift = lift;
+  }
+  public void init(){
+    Joystick driverControl = new Joystick(0);
+    Joystick manipulatorControl = new Joystick(1);
+    _setArmWithJoystick = new SetArmWithJoystick(_arm, manipulatorControl);
+    _setLiftWithJoystick = new SetLiftWithJoystick(_lift, manipulatorControl);
+    _armEncoderOverride = new ArmEncoderOverride(_arm);
+    _liftEncoderOverride = new LiftEncoderOverride(_lift);
+    _collectCargo = new CollectCargo(_cargoSystem);
+    _releaseCargo = new ReleaseCargo(_cargoSystem);
+
+    SmartDashboard.putData("AutoMode", _autoChooser);
+  }
+
+  public Command getAutonomousCommand(){
+    return _autoChooser.getSelected();
+  }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.

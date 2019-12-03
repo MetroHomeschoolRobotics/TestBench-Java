@@ -10,10 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.DigitalInput;
+//import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,11 +26,11 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  //public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  //SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -35,10 +38,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    Arm arm = new Arm(new Spark(RobotMap.armMotor));
+    CargoSystem cargoSystem = new CargoSystem(new Spark(RobotMap.cargoMotor));
+    Lift lift = new Lift(
+      arm, 
+      new Spark(RobotMap.liftMotor),
+      new DigitalInput(RobotMap.manipulatorBottomSwitch),
+      new DigitalInput(RobotMap.manipulatorTopSwitch));
+
+    m_oi = new OI(arm, cargoSystem, lift);
+    m_oi.init();
+    //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    //SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -60,12 +72,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    //Scheduler.getInstance().run();
   }
 
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
-  }
+    m_oi._setArmWithJoystick.cancel();
+    m_oi._setLiftWithJoystick.cancel();
+    m_oi._armEncoderOverride.cancel();
+    m_oi._liftEncoderOverride.cancel();
+    m_oi._collectCargo.cancel();
+    m_oi._releaseCargo.cancel();
+    }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
@@ -80,8 +99,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
+    //m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = m_oi.getAutonomousCommand();
+    m_oi._setArmWithJoystick.cancel();
+    m_oi._setLiftWithJoystick.cancel();
+    m_oi._armEncoderOverride.cancel();
+    m_oi._liftEncoderOverride.cancel();
+    m_oi._collectCargo.cancel();
+    m_oi._releaseCargo.cancel();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -112,6 +137,12 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_oi._setArmWithJoystick.start();
+    m_oi._setLiftWithJoystick.start();
+    m_oi._armEncoderOverride.start();
+    m_oi._liftEncoderOverride.start();
+    m_oi._collectCargo.start();
+    m_oi._releaseCargo.start();
   }
 
   /**
