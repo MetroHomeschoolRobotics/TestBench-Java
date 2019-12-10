@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Spark;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 //import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -38,11 +38,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Arm arm = new Arm(new Spark(RobotMap.armMotor));
-    CargoSystem cargoSystem = new CargoSystem(new Spark(RobotMap.cargoMotor));
+    Arm arm = new Arm(new TalonSRX(RobotMap.armMotor));
+    CargoSystem cargoSystem = new CargoSystem(new TalonSRX(RobotMap.cargoMotor));
     Lift lift = new Lift(
       arm, 
-      new Spark(RobotMap.liftMotor),
+      new TalonSRX(RobotMap.liftMotor),
       new DigitalInput(RobotMap.manipulatorBottomSwitch),
       new DigitalInput(RobotMap.manipulatorTopSwitch));
 

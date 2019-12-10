@@ -9,19 +9,21 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Spark;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-private Spark _armMotor;
+private TalonSRX _armMotor;
 private boolean joystickOverride = false;
 private boolean encoderOverride = false;
 //private Encoder _armMotorEncoder;
 //positioning
 
-public Arm(Spark armMotor){
+public Arm(TalonSRX armMotor){
   _armMotor = armMotor;
 }
   @Override
@@ -65,7 +67,7 @@ public Arm(Spark armMotor){
     if (joystickOverride && angle < 70) {
         val = -0.4;
     }
-    _armMotor.set(val);
+    _armMotor.set(ControlMode.PercentOutput, val);
     SmartDashboard.putNumber("arm subsystem val", val);
   }
   public double getArmAngle() { 

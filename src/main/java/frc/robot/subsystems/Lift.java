@@ -8,7 +8,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Spark;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -17,14 +19,14 @@ import frc.robot.RobotMap;
  */
 public class Lift extends Subsystem {
   private Arm _arm;
-  private Spark _liftMotor;
+  private TalonSRX _liftMotor;
   private DigitalInput _manipulatorBottomSwitch;
   private DigitalInput _manipulatorTopSwitch;
   private boolean encoderOverride;
   private boolean joystickOverride;
   //positioning
 
-  public Lift (Arm arm, Spark liftMotor, DigitalInput manipulatorBottomSwitch, DigitalInput manipulatorTopSwitch){
+  public Lift (Arm arm, TalonSRX liftMotor, DigitalInput manipulatorBottomSwitch, DigitalInput manipulatorTopSwitch){
     _arm = arm;
     _liftMotor = liftMotor;
     _manipulatorBottomSwitch = manipulatorBottomSwitch;
@@ -96,7 +98,7 @@ public class Lift extends Subsystem {
       }
     } else {
       _arm.overrideJoystick(false);*/
-      _liftMotor.set(speed);
+      _liftMotor.set(ControlMode.PercentOutput, speed);
       SmartDashboard.putNumber("lift subsystem speed", speed);
     //}
   }

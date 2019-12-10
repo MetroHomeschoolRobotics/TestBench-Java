@@ -9,7 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Spark;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 
 /**
  * Add your docs here.
@@ -17,9 +20,9 @@ import edu.wpi.first.wpilibj.Spark;
 public class CargoSystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Spark _cargoMotor; 
+  private TalonSRX _cargoMotor; 
 
-  public CargoSystem(Spark cargoMotor){
+  public CargoSystem(TalonSRX cargoMotor){
     _cargoMotor = cargoMotor;
   }
 
@@ -30,7 +33,7 @@ public class CargoSystem extends Subsystem {
   }
 
   public void setCargoMotor(double speed){
-    _cargoMotor.set(speed);
+    _cargoMotor.set(ControlMode.PercentOutput, speed);
     SmartDashboard.putNumber("cargo subsystem speed", speed);
   }
 }
