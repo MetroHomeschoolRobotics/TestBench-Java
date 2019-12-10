@@ -6,17 +6,39 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  private PneumaticCharging _charging;
-  public OI(PneumaticCharging charging) {
-    charging=_charging;
+  Command _autonomousCommand;
+  Command _driveTank;
+  Command _driveOcta;
+  SendableChooser<Command> _autoChooser = new SendableChooser<>();
+
+  public void init() {
+    Joystick driverControl = new Joystick(0);
+
+    SmartDashboard.putData("AutoMode", _autoChooser);
   }
+
+  public Command getAutonomousCommand(){
+    return _autoChooser.getSelected();
+  }
+    //private Joystick driveJoystick;
+    // std::shared_ptr<frc::Joystick> driveJoystick;
+    // std::shared_ptr<frc::Joystick> manipulatorJoystick;
+    // driveJoystick.reset(new Joystick(0));
+    // manipulatorJoystick.reset(new Joystick(1));
+  //}
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.
