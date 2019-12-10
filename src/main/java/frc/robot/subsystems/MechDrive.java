@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 //import edu.wpi.first.wpilibj.Spark;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class MechDrive extends DriveSystemBase {
   private TalonSRX _frontLeft;
   private TalonSRX _frontRight;
@@ -60,6 +62,9 @@ public class MechDrive extends DriveSystemBase {
     _rearLeft.set(ControlMode.PercentOutput, y+x+z);
     _frontRight.set(ControlMode.PercentOutput, -y-x+z);
     _rearRight.set(ControlMode.PercentOutput, -y+x+z);
-  
+     
+    SmartDashboard.putNumber("MechDrive X", x);
+    SmartDashboard.putNumber("MechDrive Y", y);
+    SmartDashboard.putNumber("MechDrive Z", z);
   }
 }

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.Spark;
 //import com.revrobotics.CANSparkMax;
 import frc.robot.subsystems.*;
@@ -38,6 +39,10 @@ public class OctaDrive extends DriveSystemBase {
     } else {
         _mechDrive.move(x,y,z);
     }
+
+    SmartDashboard.putNumber("OctaDrive X", x);
+    SmartDashboard.putNumber("OctaDrive Y", y);
+    SmartDashboard.putNumber("OctaDrive Z", z);
   }
 
   public void switchMode(){
@@ -49,6 +54,8 @@ public class OctaDrive extends DriveSystemBase {
      } else {
       _driveSwitch.set(DoubleSolenoid.Value.kForward);
      }
+
+     SmartDashboard.putBoolean("OctaDrive 'isTank'", _isTank);
   
   }
 

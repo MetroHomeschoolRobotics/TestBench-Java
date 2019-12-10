@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //import edu.wpi.first.wpilibj.Spark;
 //import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class TankDrive extends DriveSystemBase {
   private TalonSRX _frontLeft;
   private TalonSRX _frontRight;
@@ -51,6 +53,10 @@ public class TankDrive extends DriveSystemBase {
     _frontLeft.set(ControlMode.PercentOutput, (y-x));
     _rearLeft.set(ControlMode.PercentOutput, (y-x));
     _frontRight.set(ControlMode.PercentOutput, (-y-x));
-    _rearRight.set(ControlMode.PercentOutput, (-y-x));  
+    _rearRight.set(ControlMode.PercentOutput, (-y-x));
+    
+    SmartDashboard.putNumber("TankDrive X", x);
+    SmartDashboard.putNumber("TankDrive Y", y);
+    SmartDashboard.putNumber("TankDrive Z", z);
   }
 }
