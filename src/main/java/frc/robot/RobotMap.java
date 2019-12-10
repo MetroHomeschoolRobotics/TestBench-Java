@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -24,6 +23,13 @@ public class RobotMap {
   public static int TankSwitchForward = 1;
   public static int TankSwitchReverse = 2;
 
+  // cs::UsbCamera cam0 = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+	// cam0.SetFPS(30);
+  //   //prev was 320, 240
+  //   //new will be times 200/320
+  //   //200, 150
+	// //cam0.SetResolution(320,240);
+  //   cam0.SetResolution(200,150);
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;

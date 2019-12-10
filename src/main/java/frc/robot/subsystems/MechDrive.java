@@ -7,22 +7,23 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 //import edu.wpi.first.wpilibj.Spark;
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class MechDrive extends DriveSystemBase {
-  /*private Spark frontLeft;
-  private Spark frontRight;
-  private Spark rearLeft;
-  private Spark rearRight;*/
-  private CANSparkMax _frontLeft;
+  private TalonSRX _frontLeft;
+  private TalonSRX _frontRight;
+  private TalonSRX _rearLeft;
+  private TalonSRX _rearRight;
+  /*private CANSparkMax _frontLeft;
   private CANSparkMax _frontRight;
   private CANSparkMax _rearLeft;
-  private CANSparkMax _rearRight;
+  private CANSparkMax _rearRight;*/
   private double threshold = 0.1;
 
-  //public MechDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight){
-    public MechDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
+  public MechDrive(TalonSRX frontLeft, TalonSRX frontRight, TalonSRX rearLeft, TalonSRX rearRight){
+    //public MechDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
     _frontLeft = frontLeft;
     _frontRight = frontRight;
     _rearLeft = rearLeft;
@@ -55,10 +56,10 @@ public class MechDrive extends DriveSystemBase {
      }
   
     //driveTrain.get()->DriveCartesian(x, y, z, positioning.get()->GetAngle());
-    _frontLeft.set(y-x+z);
-    _rearLeft.set(y+x+z);
-    _frontRight.set(-y-x+z);
-    _rearRight.set(-y+x+z);
+    _frontLeft.set(ControlMode.PercentOutput, y-x+z);
+    _rearLeft.set(ControlMode.PercentOutput, y+x+z);
+    _frontRight.set(ControlMode.PercentOutput, -y-x+z);
+    _rearRight.set(ControlMode.PercentOutput, -y+x+z);
   
   }
 }
