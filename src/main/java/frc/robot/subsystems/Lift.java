@@ -60,7 +60,7 @@ public class Lift extends Subsystem {
   }
 
   public void setLiftMotor(double speed){
-  /*  int pos = getLiftDistance();
+    int pos = getLiftDistance();
     if (!encoderOverride) {
       if (pos > 28000 && speed > 0){
         speed = 0;
@@ -92,15 +92,15 @@ public class Lift extends Subsystem {
     if (_arm.getArmAngle() < 70 && (speed > 0.15 || speed < 0)) {
       _arm.overrideJoystick(true);
       if (pos < 3500) {
-        _liftMotor.set(0.05);
+        _liftMotor.set(ControlMode.PercentOutput, 0.05);
       } else {
-      _liftMotor.set(0.15);
+      _liftMotor.set(ControlMode.PercentOutput, 0.15);
       }
     } else {
-      _arm.overrideJoystick(false);*/
+      _arm.overrideJoystick(false);
       _liftMotor.set(ControlMode.PercentOutput, speed);
       SmartDashboard.putNumber("lift subsystem speed", speed);
-    //}
+    }
   }
   }
 

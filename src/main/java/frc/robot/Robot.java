@@ -80,10 +80,6 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     m_oi._setArmWithJoystick.cancel();
     m_oi._setLiftWithJoystick.cancel();
-    m_oi._armEncoderOverride.cancel();
-    m_oi._liftEncoderOverride.cancel();
-    m_oi._collectCargo.cancel();
-    m_oi._releaseCargo.cancel();
     }
 
   /**
@@ -103,10 +99,6 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_oi.getAutonomousCommand();
     m_oi._setArmWithJoystick.cancel();
     m_oi._setLiftWithJoystick.cancel();
-    m_oi._armEncoderOverride.cancel();
-    m_oi._liftEncoderOverride.cancel();
-    m_oi._collectCargo.cancel();
-    m_oi._releaseCargo.cancel();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -139,10 +131,6 @@ public class Robot extends TimedRobot {
     }
     m_oi._setArmWithJoystick.start();
     m_oi._setLiftWithJoystick.start();
-    m_oi._armEncoderOverride.start();
-    m_oi._liftEncoderOverride.start();
-    m_oi._collectCargo.start();
-    m_oi._releaseCargo.start();
   }
 
   /**

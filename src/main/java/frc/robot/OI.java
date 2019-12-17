@@ -47,10 +47,10 @@ public class OI {
     _collectCargo = new CollectCargo(_cargoSystem);
     _releaseCargo = new ReleaseCargo(_cargoSystem);
     
-    Button collectButton = new JoystickButton(manipulatorControl, 5);
+    Button collectButton = new JoystickButton(manipulatorControl, 3); //5
     collectButton.whileHeld(_collectCargo);
 
-    Button releaseButton = new JoystickButton(manipulatorControl, 6);
+    Button releaseButton = new JoystickButton(manipulatorControl, 2); //6
     releaseButton.whileHeld(_releaseCargo);
 
     SmartDashboard.putData("AutoMode", _autoChooser);
