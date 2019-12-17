@@ -43,23 +43,30 @@ public class FollowTheObject extends Command {
     if (_foundBlock != null) {
       System.out.println("Follow Found Block: " + _foundBlock.toString());
       double x = 0,y = 0;
-      if (_foundBlock.getWidth() > 10 && _foundBlock.getWidth() < 50){
+      int blockX = _foundBlock.getX();
+      int blockWidth = _foundBlock.getWidth();
+      int center = (blockX + blockWidth) / 2;
+      if (center > 10 && center < 112){
         x = 0.12;
-      } else if (_foundBlock.getWidth() > 55) {
+      } else if (center > 113) {
         x = -0.12;
       }
-      if (_foundBlock.getX() > 10 && _foundBlock.getX() < 230){
-        y = 0.12;
-      } else if (_foundBlock.getX() > 235){
+      if (blockWidth > 10 && blockWidth < 70){
         y = -0.12;
+      } else if (blockWidth > 80){
+        y = 0.12;
       }
       System.out.println("Follow age: " + _foundBlock.getAge() + ", x:" + x + ", y:" + y); 
+      SmartDashboard.putNumber("Found Block X", blockX);
+      SmartDashboard.putNumber("Found Block Width", blockWidth);
+      SmartDashboard.putNumber("Found Block Center", center);
       SmartDashboard.putNumber("Follow Age", _foundBlock.getAge());
       SmartDashboard.putNumber("Follow X", x);
       SmartDashboard.putNumber("Follow Y", y);
 
-      _driveSystem.move(-x, y, 0);
+      _driveSystem.move(x, y, 0);
     } else {
+      _driveSystem.move(0, 0, 0);
       System.out.println("Follow no block found");
     }
   }
@@ -67,7 +74,8 @@ public class FollowTheObject extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return _foundBlock == null;
+    return false;
+    //return _foundBlock == null;
   }
 
   // Called once after isFinished returns true
