@@ -27,6 +27,7 @@ public class OI {
   Command _autonomousCommand;
   Command _driveTank;
   Command _driveOcta;
+  Command _switchDrive;
   SendableChooser<Command> _autoChooser = new SendableChooser<>();
   public OI(DriveSystemBase tankDrive, DriveSystemBase octaDrive, DriveSystemBase mechDrive){
     _tankDrive = tankDrive;
@@ -39,6 +40,10 @@ public class OI {
     Joystick manipulatorControl = new Joystick(1);
     _driveTank = new DriveTank(_tankDrive, driverControl, manipulatorControl);
     _driveOcta = new DriveOcta(_octaDrive, driverControl, manipulatorControl);
+    _switchDrive = new SwitchDrive(_octaDrive);
+
+    Button switchDriveButton = new JoystickButton(driverControl, 3);
+    switchDriveButton.whenPressed(_switchDrive);
 
     SmartDashboard.putData("AutoMode", _autoChooser);
   }
