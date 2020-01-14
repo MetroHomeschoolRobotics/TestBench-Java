@@ -7,25 +7,25 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //import edu.wpi.first.wpilibj.Spark;
-//import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TankDrive extends DriveSystemBase {
-  private TalonSRX _frontLeft;
+ /* private TalonSRX _frontLeft;
   private TalonSRX _frontRight;
   private TalonSRX _rearLeft;
-  private TalonSRX _rearRight;
-/*  private CANSparkMax _frontLeft;
+  private TalonSRX _rearRight;*/
+  private CANSparkMax _frontLeft;
   private CANSparkMax _frontRight;
   private CANSparkMax _rearLeft;
-  private CANSparkMax _rearRight;*/
+  private CANSparkMax _rearRight;
 
-  public TankDrive(TalonSRX frontLeft, TalonSRX frontRight, TalonSRX rearLeft, TalonSRX rearRight){
-//  public TankDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
+ // public TankDrive(TalonSRX frontLeft, TalonSRX frontRight, TalonSRX rearLeft, TalonSRX rearRight){
+  public TankDrive(CANSparkMax frontLeft, CANSparkMax frontRight, CANSparkMax rearLeft, CANSparkMax rearRight){
     _frontLeft = frontLeft;
     _frontRight = frontRight;
     _rearLeft = rearLeft;
@@ -50,10 +50,14 @@ public class TankDrive extends DriveSystemBase {
 
   @Override
   public void move(double x, double y, double z){
-    _frontLeft.set(ControlMode.PercentOutput, (y-x));
+    /*_frontLeft.set(ControlMode.PercentOutput, (y-x));
     _rearLeft.set(ControlMode.PercentOutput, (y-x));
     _frontRight.set(ControlMode.PercentOutput, (-y-x));
-    _rearRight.set(ControlMode.PercentOutput, (-y-x));
+    _rearRight.set(ControlMode.PercentOutput, (-y-x));*/
+    _frontLeft.set(-y+x);
+    _rearLeft.set(-y+x);
+    _frontRight.set(y+x);
+    _rearRight.set(y+x);
     
     SmartDashboard.putNumber("TankDrive X", x);
     SmartDashboard.putNumber("TankDrive Y", y);

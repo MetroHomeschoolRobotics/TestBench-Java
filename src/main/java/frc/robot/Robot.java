@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 //import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.can.*;
-//import com.revrobotics.CANSparkMax;
+//import edu.wpi.first.wpilibj.Talon;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import com.ctre.phoenix.motorcontrol.InvertType;
+//import com.ctre.phoenix.motorcontrol.can.*;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     //CameraServer.getInstance().startAutomaticCapture();
-/*    DriveSystemBase tankDrive = new TankDrive(
+    DriveSystemBase tankDrive = new TankDrive(
       new CANSparkMax(RobotMap.LeftFrontMotor, MotorType.kBrushless), 
       new CANSparkMax(RobotMap.RightFrontMotor, MotorType.kBrushless),
       new CANSparkMax(RobotMap.LeftRearMotor, MotorType.kBrushless),
@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
         new CANSparkMax(RobotMap.LeftFrontMotor, MotorType.kBrushless), 
         new CANSparkMax(RobotMap.RightFrontMotor, MotorType.kBrushless),
         new CANSparkMax(RobotMap.LeftRearMotor, MotorType.kBrushless),
-        new CANSparkMax(RobotMap.RightRearMotor, MotorType.kBrushless));*/
+        new CANSparkMax(RobotMap.RightRearMotor, MotorType.kBrushless));
 
-        DriveSystemBase tankDrive = new TankDrive(
+/*        DriveSystemBase tankDrive = new TankDrive(
           new TalonSRX(RobotMap.LeftFrontMotor),
           new TalonSRX(RobotMap.RightFrontMotor),
           new TalonSRX(RobotMap.LeftRearMotor),
@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
           new TalonSRX(RobotMap.LeftFrontMotor),
           new TalonSRX(RobotMap.RightFrontMotor),
           new TalonSRX(RobotMap.LeftRearMotor),
-          new TalonSRX(RobotMap.RightRearMotor));
+          new TalonSRX(RobotMap.RightRearMotor));*/
 
     m_octaDrive = new OctaDrive(
       tankDrive, 
@@ -101,8 +101,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
-    //m_oi._driveTank.cancel();
-    m_oi._driveOcta.cancel();
+    m_oi._driveTank.cancel();
+    //m_oi._driveOcta.cancel();
   }
 
   /**
@@ -120,8 +120,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //m_autonomousCommand = m_chooser.getSelected();
     m_autonomousCommand = m_oi.getAutonomousCommand();
-    //m_oi._driveTank.cancel();
-    m_oi._driveOcta.cancel();
+    m_oi._driveTank.cancel();
+    //m_oi._driveOcta.cancel();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -152,8 +152,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //m_oi._driveTank.start();
-    m_oi._driveOcta.start();
+    m_oi._driveTank.start();
+    //m_oi._driveOcta.start();
   }
 
   /**
