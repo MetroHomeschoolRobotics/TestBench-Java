@@ -34,8 +34,10 @@ public class OI {
 
   public void init() {
     if (_i2cPixy2 != null){
+      System.out.println("Adding Dashboard Options...");
       _i2cPixyChooser.setDefaultOption("Check Version", new SendCheckVersion(_i2cPixy2));
       _i2cPixyChooser.addOption("Get Biggest Block", new SendGetBiggestBlock(_i2cPixy2));
+      _i2cPixyChooser.addOption("Find Color Blocks", new FindColorBlocks(_i2cPixy2));
       _i2cPixyChooser.addOption("Lamp Off", new SendLED(_i2cPixy2, false, 0, 0, 0));
       _i2cPixyChooser.addOption("Lamp On (Red)", new SendLED(_i2cPixy2, true, 255, 0, 0));
       _i2cPixyChooser.addOption("Lamp On (Green)", new SendLED(_i2cPixy2, true, 0, 255, 0));
@@ -48,6 +50,7 @@ public class OI {
     if (_spiPixy2 != null){
       _spiPixyChooser.setDefaultOption("Check Version", new SendCheckVersion(_spiPixy2));
       _spiPixyChooser.addOption("Get Biggest Block", new SendGetBiggestBlock(_spiPixy2));
+      _spiPixyChooser.addOption("Find Color Blocks", new FindColorBlocks(_spiPixy2));
       _spiPixyChooser.addOption("Lamp Off", new SendLED(_spiPixy2, false, 0, 0, 0));
       _spiPixyChooser.addOption("Lamp On (Red)", new SendLED(_spiPixy2, true, 255, 0, 0));
       _spiPixyChooser.addOption("Lamp On (Green)", new SendLED(_spiPixy2, true, 0, 255, 0));

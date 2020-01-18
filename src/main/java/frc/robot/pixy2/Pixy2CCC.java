@@ -56,8 +56,8 @@ public class Pixy2CCC {
 	// PIXY_SIG1 | PIXY_SIG5
 	public final static byte CCC_SIG1 = 0x01;
 	public final static byte CCC_SIG2 = 0x02;
-	public final static byte CCC_SIG3 = 0x04;
-	public final static byte CCC_SIG4 = 0x08;
+	public final static byte CCC_SIG4 = 0x08;//0x04//3//4-4 was not working
+	public final static byte CCC_SIG3 = 0x04;//0x08//4//3-3 was working
 	public final static byte CCC_SIG5 = 0x10;
 	public final static byte CCC_SIG6 = 0x20;
 	public final static byte CCC_SIG7 = 0x40;
