@@ -75,7 +75,7 @@ private Block getBiggestBlock(int signature) {
     return null;
   }
 
-  int blockCount = tracker.getBlocks(true, signature, 5);//wait could be false
+  int blockCount = tracker.getBlocks(false, signature, 5);//wait worked on true
   //System.out.println("Found " + blockCount + " blocks!"); // Reports number of blocks found
   if (blockCount <= 0) {
     System.out.println("no blocks found");
